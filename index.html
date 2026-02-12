@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe4f0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Envelope Page Styles */
+        .envelope-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            z-index: 50;
+            width: 100%;
+        }
+
+        .envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .envelope:active {
+            transform: scale(0.98);
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(255, 105, 180, 0.4);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffb3d9 0%, #ff69b4 100%);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8em;
+            color: white;
+            font-weight: bold;
+            transition: all 0.6s ease;
+            transform-origin: top;
+            border: 3px solid #ff1493;
+        }
+
+        .envelope:hover .envelope-flap,
+        .envelope:active .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: #ff69b4;
+        }
+
+        .open-text {
+            font-size: 1.1em;
+            margin-top: 30px;
+            color: #ff69b4;
+            font-weight: bold;
+            animation: bounce 2s infinite;
+            padding: 0 20px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .envelope-page.hidden {
+            display: none;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.2);
+            max-width: 600px;
+            width: 100%;
+            z-index: 10;
+            animation: slideIn 0.8s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .container.hidden {
+            display: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .photo-section {
+            margin-bottom: 25px;
+        }
+
+        .couple-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ffb3d9;
+            margin: 0 auto;
+            display: block;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+        }
+
+        h1 {
+            color: #ff69b4;
+            font-size: 2em;
+            margin: 20px 0 15px 0;
+            animation: fadeInDown 0.8s ease-out 0.2s backwards;
+        }
+
+        .message {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin: 15px 0 25px 0;
+            animation: fadeInDown 0.8s ease-out 0.4s backwards;
+            font-style: italic;
+        }
+
+        .question {
+            font-size: 1.6em;
+            color: #ff1493;
+            font-weight: bold;
+            margin: 25px 0;
+            animation: fadeInDown 0.8s ease-out 0.6s backwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 30px;
+            animation: fadeInUp 0.8s ease-out 0.8s backwards;
+            flex-wrap: wrap;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .yes-btn:active {
+            transform: scale(0.95);
+        }
+
+        .no-btn {
+            background: #ffb3d9;
+            color: #333;
+        }
+
+        .no-btn:hover {
+            background: #ff99cc;
+            transform: scale(0.92);
+        }
+
+        .no-btn:active {
+            transform: scale(0.88);
+        }
+
+        .signature {
+            margin-top: 30px;
+            color: #ff69b4;
+            font-size: 1em;
+            font-weight: bold;
+            animation: fadeInDown 0.8s ease-out 1s backwards;
+        }
+
+        /* Floating Hearts Animation */
+        .heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart::before {
+            content: "❤️";
+            font-size: 2em;
+            animation: float 6s ease-in infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* No page styles */
+        .no-page {
+            display: none;
+            z-index: 20;
+        }
+
+        .no-page.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .no-container {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .no-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        .no-message {
+            font-size: 1.1em;
+            color: #ff69b4;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            padding: 12px 25px;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .question {
+                font-size: 1.4em;
+            }
+
+            .message {
+                font-size: 0.9em;
+            }
+
+            .envelope {
+                width: 250px;
+                height: 160px;
+            }
+
+            .open-text {
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 30px 20px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+                margin: 15px 0 10px 0;
+            }
+
+            .message {
+                font-size: 0.85em;
+                margin: 12px 0 20px 0;
+                line-height: 1.5;
+            }
+
+            .question {
+                font-size: 1.2em;
+                margin: 20px 0;
+            }
+
+            .couple-photo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .buttons-container {
+                gap: 8px;
+                margin-top: 20px;
+            }
+
+            button {
+                padding: 10px 15px;
+                font-size: 0.9em;
+                min-width: 90px;
+            }
+
+            .signature {
+                margin-top: 20px;
+                font-size: 0.9em;
+            }
+
+            .envelope {
+                width: 220px;
+                height: 140px;
+            }
+
+            .envelope-flap {
+                font-size: 1.4em;
+            }
+
+            .open-text {
+                font-size: 0.9em;
+                margin-top: 20px;
+            }
+
+            .no-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .no-message {
+                font-size: 1em;
+            }
+
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .message {
+                font-size: 0.8em;
+            }
+
+            .question {
+                font-size: 1.1em;
+            }
+
+            button {
+                padding: 8px 12px;
+                font-size: 0.85em;
+            }
+        }
+
+        /* Countdown Timer Styles */
+        .countdown-container {
+            background: linear-gradient(135deg, #ffb3d9 0%, #ffe4f0 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 2px solid #ff69b4;
+        }
+
+        .countdown-title {
+            color: #ff1493;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-unit {
+            background: white;
+            border-radius: 10px;
+            padding: 12px 15px;
+            min-width: 70px;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.2);
+        }
+
+        .countdown-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ff1493;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .countdown-container {
+                padding: 15px;
+                margin: 15px 0;
+            }
+
+            .countdown-unit {
+                padding: 10px 12px;
+                min-width: 60px;
+            }
+
+            .countdown-number {
+                font-size: 1.4em;
+            }
+
+            .countdown-label {
+                font-size: 0.75em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope-page" id="envelopePage">
+        <div style="text-align: center;">
+            <div class="envelope" onclick="openEnvelope()">
+                <div class="envelope-flap">
+                    💌
+                </div>
+            </div>
+            <div class="open-text">Click to open me baby 💕</div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="mainPage">
+        <div class="photo-section">
+            <img src="C:\Users\Toshiba\Desktop\nunu birthday\nunu.jfif" alt="Us" class="couple-photo" id="couplePhoto">
+        </div>
+        
+        <h1>Nunu 💕</h1>
+        
+        <p class="message">
+            "From the moment I met you I knew you were the LOML.<br>
+            I love you so much Albi."
+        </p>
+        
+        <div class="question">Will you be my Valentine?</div>
+        
+        <div class="buttons-container">
+            <button class="yes-btn" onclick="handleYes()">YES! 💕</button>
+            <button class="no-btn" onclick="handleNo()">No</button>
+        </div>
+        
+        <div class="signature">
+            From your Juju 💖
+        </div>
+    </div>
+
+    <div class="no-page" id="noPage">
+        <div class="no-container">
+            <img src="C:\Users\Toshiba\Desktop\nunu birthday\monkey.jfif" alt="Monkey with gun" class="no-image" id="monkeyImage">
+            <div class="no-message">
+                You have no other option than to say YES! 😂🔫
+            </div>
+            <button class="back-btn" onclick="handleBack()">Go Back & Say YES!</button>
+        </div>
+    </div>
+
+    <script>
+        // Open envelope function
+        function openEnvelope() {
+            const envelopePage = document.getElementById('envelopePage');
+            const mainPage = document.getElementById('mainPage');
+            
+            envelopePage.classList.add('hidden');
+            mainPage.classList.remove('hidden');
+        }
+
+        // Create floating hearts continuously
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = '-50px';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 6000);
+        }
+
+        // Create hearts every 300ms
+        setInterval(createFloatingHeart, 300);
+
+        // Handle YES click
+        function handleYes() {
+            createConfetti();
+            
+            // Show celebration message with countdown timer
+            const container = document.getElementById('mainPage');
+            const originalContent = container.innerHTML;
+            
+            container.innerHTML = `
+                <div style="animation: slideIn 0.8s ease-out;">
+                    <h1 style="color: #ff1493; font-size: 3em; margin: 20px 0;">YES!!! 🎉💕</h1>
+                    <p style="font-size: 1.3em; color: #ff69b4; margin: 20px 0;">
+                        I'm the happiest person alive right now!<br>
+                        I love you so much, Nunu! 💖
+                    </p>
+                    <p style="font-size: 1.1em; color: #666; margin-top: 30px;">
+                        Happy Valentine's Day & Birthday! 🎂💕
+                    </p>
+                    <div class="countdown-container">
+                        <div class="countdown-title">Countdown to Valentine's Day 💌</div>
+                        <div class="countdown-timer" id="countdownTimer">
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="days">0</span>
+                                <div class="countdown-label">Days</div>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="hours">0</span>
+                                <div class="countdown-label">Hours</div>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="minutes">0</span>
+                                <div class="countdown-label">Minutes</div>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="seconds">0</span>
+                                <div class="countdown-label">Seconds</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Start countdown timer
+            startCountdown();
+        }
+
+        // Countdown timer function
+        function startCountdown() {
+            function updateCountdown() {
+                // Get current time in USA Eastern Time
+                const now = new Date();
+                const usaTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+                
+                // Valentine's Day Feb 14, 2026 at midnight EST
+                const valentinesDay = new Date(2026, 1, 14, 0, 0, 0);
+                
+                const difference = valentinesDay - usaTime;
+                
+                if (difference > 0) {
+                    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                    
+                    document.getElementById('days').textContent = days;
+                    document.getElementById('hours').textContent = hours;
+                    document.getElementById('minutes').textContent = minutes;
+                    document.getElementById('seconds').textContent = seconds;
+                } else {
+                    document.getElementById('days').textContent = '0';
+                    document.getElementById('hours').textContent = '0';
+                    document.getElementById('minutes').textContent = '0';
+                    document.getElementById('seconds').textContent = '0';
+                }
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Handle NO click
+        function handleNo() {
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('noPage').classList.add('show');
+        }
+
+        // Handle going back from NO page
+        function handleBack() {
+            document.getElementById('noPage').classList.remove('show');
+            document.getElementById('mainPage').style.display = 'block';
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff69b4', '#ff1493', '#ffb3d9', '#ffe4f0', '#ffc0cb'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `float ${3 + Math.random() * 2}s ease-out forwards`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+        // Start floating hearts on page load
+        createFloatingHeart();
+    </script>
+</body>
+</html>
